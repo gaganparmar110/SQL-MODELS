@@ -1,26 +1,3 @@
-use SqlAssignment;
-
-create schema JoinQuery;
-
-create table JoinQuery.Addresses(LocationId int,StreetAddress varchar(50),
-City varchar(50),StateProvince varchar(50),CountryName varchar(50));
-
-create table JoinQuery.Department(DepartmentId int,DepartmentName varchar(50),DepartmentNumber int,ManagerId int Foreign Key references JoinQuery.Manager(ManagerId);)
-
-create table JoinQuery.Employee (EmployeeId int,FirstName varchar(50),LastName varchar(50),DepartmentId int foreign KEY references JoinQuery.Department(DepartmentId),JobId int foreign KEY references JoinQuery.Job(JobId),HireDate date )
-
-create table JoinQuery.Manager(ManagerId int,ManagerFirstName varchar(50),ManagerLastName varchar(50))      
-
-create table JoinQuery.Job(JobId int,JobTitle varchar(50),Salary bigINT);
-create table JoinQuery.JobHistory(JobHistoryId int,EmployeeId int Foreign Key References JoinQuery.Employee(EmployeeId),Startingate date,EndingDate date)
-
-select * from JoinQuery.Job
-select * from JoinQuery.JobHistory
-select * from JoinQuery.Manager
-select * from JoinQuery.Department
-select * from JoinQuery.Addresses
-select * from JoinQuery.Employee
-
 
 1>
 select DepartmentId,StreetAddress,City,StateProvince,CountryName from JoinQuery.Addresses left JOIN JoinQuery.Department ON JoinQuery.Addresses.LocationId=JoinQuery.Department.LocationId;
@@ -45,7 +22,13 @@ select DepartmentName,ManagerFirstName,City from JoinQuery.Department right join
 10>
 select JobTitle,avg(Salary) as AverageOfSalary from JoinQuery.Job left JOIN JoinQuery.Employee ON JoinQuery.Job.JobId=JoinQuery.Employee.JobId group by JobTitle;
  select avg(salary) from JoinQuery.Job
- 11>
+ 11> 
+select JobTitle,FirstName,LastName,FinalSalary,MinSalary,(FinalSalary-MinSalary) as diff from JoinQuery.Employee inner join JoinQuery.Job on JoinQuery.Employee.JobId=JoinQuery.Job.JobId inner join JoinQuery.JobHistory on JoinQuery.Employee.EmployeeId=JoinQuery.JobHistory.EmployeeId
+ 12>
+ select FirstName,FinalSalary from JoinQuery.JobHistory left join JoinQuery.Employee ON JoinQuery.JobHistory.EmployeeId=JoinQuery.Employee.EmployeeId where FinalSalary>10000; 
+ 13>
+ select DepartmentName,FirstName,LastName,HireDate,ManagerFirstName from JoinQuery.Department right join JoinQuery.Employee on JoinQuery.Department.DepartmentId=JoinQuery.Employee.DepartmentId inner join JoinQuery.Manager ON JoinQuery.Department.ManagerId=JoinQuery.Manager.ManagerId WHERE JoinQuery.Manager.Experience>15;
+
 
 
  
