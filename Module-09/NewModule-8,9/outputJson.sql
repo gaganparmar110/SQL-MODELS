@@ -10,7 +10,7 @@ SET @jsonOutput = (SELECT TOP (1) FirstName,LastName FROM JoinQuery.Employee FOR
 END
 
 DECLARE @json AS NVARCHAR(MAX)
-
-
-EXEC spOutputJson @jsonOutput = @json OUTPUT
+EXEC dbo.spOutputJson @jsonOutput = @json OUTPUT
+  
+SELECT @json
  
