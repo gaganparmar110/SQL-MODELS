@@ -1,11 +1,12 @@
 use AdventureWorks
 use master
 step-2
-create function dbo.CalculateEndDate(@LastDate date)
+ALTER function dbo.CalculateEndDate(@LastDate date)
 returns date
 AS BEGIN
-  RETURN DATEADD(day, 0 - DAY(@LastDate), @LastDate);
+  RETURN  EOMONTH(@LastDate,2);
 END;
+
 
 
 step-3
@@ -25,17 +26,16 @@ EOMONTH ( start_date [, month_to_add ] )
 alter function dbo.CalculateEndDate(@StartDate date)
 returns date
 AS BEGIN
-declare @query date
-select @query=EOMONTH('2020-02-03') end_of_Month_DAY_2020;
-  
-  return @query
-END;
-SELECT 
-    EOMONTH('2019-02-15') end_of_month_feb2019;
 
-	step-7
+
+  
+  return EOMONTH(@StartDate);
+END;
+
+
+step-7
 	SELECT dbo.CalculateEndDate(SYSDATETIME());
-SELECT dbo.CalculateEndDate('2018-03-01');
+  SELECT dbo.CalculateEndDate('2018-03-01');
 
 
 step-8
