@@ -1,3 +1,5 @@
+
+
 CREATE FUNCTION dbo.FormatPhoneNumber(@PhoneNo VARCHAR(20))
 RETURNS VARCHAR(20)
 AS
@@ -13,6 +15,8 @@ RETURN @Formatted
 END
 GO
 
-drop function FormatPhoneNumber
 
-select  dbo.FormatPhoneNumber('34537786544434') ;
+
+select  dbo.FormatPhoneNumber('9755776178') ;
+
+drop function FormatPhoneNumber
