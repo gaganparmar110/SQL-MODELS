@@ -1,49 +1,29 @@
-use SqlAssignment;
-step-2
-create table dbo.CustomerLogs(StudentId int,ActionPerform varchar(10));
 
-step-3
-create TRIGGER [dbo].[StudentUPDATE]
-       ON dbo.NewStudent 
+use TutorialDb;
+
+SELECT * FROM student
+select * from FeesReport
+
+alter TRIGGER tr_afterupdate
+ON Student 
 AFTER UPDATE
-AS
+as
+BEGIN   
 
-DECLARE @StudentId INT,
-           @SurName VARCHAR(50),
-	   @FirstName VARCHAR(50),
-	   @MiddleName VARCHAR(50),
-	   @Gender varchar(50), 
-	   @Date date,
-	   @Action varchar(50);
+	IF (UPDATE(studentFeesStatus))
+	declare @status varchar(100),@StudentId int
+	select @StudentId=ins.studentid,@status=ins.studentFeesStatus from inserted as ins
+	UPDATE  FeesReport SET studentFeesStatus=@status  where studentId = @studentId
+	end
+	
 
-	   SELECT @StudentId = ins.StudentId FROM INSERTED ins;
-	    SELECT @SurName = ins.Surname FROM INSERTED ins;
-		 SELECT @FirstName = ins.FirstName FROM INSERTED ins;
-		  SELECT @MiddleName = ins.MiddleName FROM INSERTED ins;
-		   SELECT @Gender = ins.Gender FROM INSERTED ins;
-		    SELECT @Date = ins.AdmitDate FROM INSERTED ins;
-       
-       IF UPDATE(FirstName)
-       BEGIN
-              SET @Action = 'Updated FirstName'
-       END
- 
-       IF UPDATE(Surname)
-       BEGIN
-              SET @Action = 'Updated LastName'
-       END
- 
-       INSERT INTO CustomerLogs(StudentId,ActionPerform)
-       VALUES(@StudentId, @Action)
-	  
-PRINT 'We Successfully Fired the AFTER UPDATE Triggers in SQL Server.'
-GO
+select * from FeesReport;
+select * from Student;
 
-step-4
-update dbo.NewStudent set FirstName='newGagan' where StudentId=4;
+update Student set studentFeesStatus='submitted' where studentId=4;
 
 
 
-select * from dbo.CustomerLogs;
-select * from dbo.NewStudent;
+
+
 
