@@ -1,43 +1,41 @@
-step-1
-use SqlAssignment;
+use TutorialDb;
 
-step-2
--- Step 1 - Create Table Members
-CREATE TABLE TeamMember (
-    memberid INT ,
-    name VARCHAR(100) NOT NULL,
+CREATE TABLE Student (
+    studentId INT ,
+    studentName VARCHAR(100) NOT NULL,
     email VARCHAR(255),
-    birthDate DATE,
-    PRIMARY KEY (memberId)
+	studentFeesStatus varchar(100) NOT NULL,
+    PRIMARY KEY (studentId)
 );
 
--- Step 2 - Create Table Reminders
-CREATE TABLE reminder (
-    id INT ,
-    memberId INT,
-    message VARCHAR(255) NOT NULL,
-    PRIMARY KEY (id , memberId)
+CREATE TABLE FeesReport  (
+    feesId INT ,
+    studentId INT,
+    studentFeesStatus VARCHAR(100) NOT NULL,
+    PRIMARY KEY (feesId)
 );
 
--- Step 3 - Create Trigger
-
-CREATE TRIGGER after_members_insert
-ON TeamMember 
+CREATE TRIGGER tr_afterinsert
+ON Student 
 AFTER INSERT
 as
 BEGIN
-    declare @birthDate DATE,
+    declare @Fees VARCHAR(100) ,
 	@id int
 	
-	select @id = memberId from inserted
-	select @birthDate = birthDate from inserted
-    IF @birthDate IS NULL 
+	select @id = studentId from inserted
+	select @Fees = studentFeesStatus from inserted
+    IF(@Fees = 'Submitted' )
 	Begin
-        INSERT INTO reminder(memberId, message)
-        VALUES(@id,'Hi please update your date of birth.');
+        INSERT INTO FeesReport(studentId, studentFeesStatus)
+        VALUES(@id,'submitted');
     END
 END
 
-INSERT INTO DBO.TeamMember(name,email) VALUES('gagan','@parmar')
+INSERT INTO DBO.Student(studentName,email,studentFeesStatus) VALUES('gagan','gagan@gmail.com','submitted');
 
-select * from dbo.reminder
+select * from FeesReport;
+select * from Student;
+
+
+select * from dbo.FeesReport

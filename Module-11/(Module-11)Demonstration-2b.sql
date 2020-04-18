@@ -1,41 +1,22 @@
-CREATE TABLE Salaries (
-    employeeNumber INT PRIMARY KEY,
-    salary DECIMAL(10,2) NOT NULL DEFAULT 0
-);
 
-select * from Salaries
-INSERT INTO Salaries(employeeNumber,salary)
-VALUES
-    (1002,5000),
-    (1056,7000),
-    (1076,8000);
-	
--- Step 3 - Create Table SalaryBudgets
-	
-CREATE TABLE SalaryBudgets(
-    total DECIMAL(15,2) NOT NULL
-);
-
-INSERT INTO SalaryBudgets(total)
-SELECT SUM(salary) 
-FROM Salaries;
-
-
-alter TRIGGER after_salaries_delete
-
-ON Salaries 
-
-AFTER DELETE
+CREATE TRIGGER tr_afterdelete
+ON Student 
+AFTER delete
 as
-begin
-declare @salary DECIMAL(10,2)
-select @salary= salary from deleted
-UPDATE SalaryBudgets 
-SET total = total - @salary;
-end
+BEGIN
+    declare @studentId int 
+	select @studentId = studentId from deleted;
 
-DELETE FROM Salaries
-WHERE employeeNumber = 1002;
+	delete from FeesReport where studentId = @studentId
+
+	
+END
+
+select * from Student;
+
+select * from FeesReport;
+
+delete from Student where studentId = 1;
 
 
-SELECT * FROM SalaryBudgets; 
+
