@@ -38,6 +38,6 @@ BEGIN
     END
 END
 
-INSERT INTO DBO.TeamMember(name,email) VALUES('krati','@dosi')
+INSERT INTO DBO.TeamMember(name,email) VALUES('gagan','@parmar')
 
 select * from dbo.reminder
