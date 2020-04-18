@@ -15,7 +15,7 @@ CREATE TABLE FeesReport  (
     PRIMARY KEY (feesId)
 );
 
-CREATE TRIGGER tr_afterinsert
+alter TRIGGER tr_afterinsert
 ON Student 
 AFTER INSERT
 as
@@ -30,9 +30,14 @@ BEGIN
         INSERT INTO FeesReport(studentId, studentFeesStatus)
         VALUES(@id,'submitted');
     END
+	 IF(@Fees = 'pending' )
+	Begin
+        INSERT INTO FeesReport(studentId, studentFeesStatus)
+        VALUES(@id,'pending');
+    END
 END
 
-INSERT INTO DBO.Student(studentName,email,studentFeesStatus) VALUES('gagan','gagan@gmail.com','submitted');
+INSERT INTO DBO.Student(studentName,email,studentFeesStatus) VALUES('rahul','rahul@gmail.com','pending');
 
 select * from FeesReport;
 select * from Student;
