@@ -9,4 +9,4 @@ return @i
 end
 GO
 
-select dbo.hgf('krati')
+select dbo.hgf('gagan')
