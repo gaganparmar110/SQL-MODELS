@@ -20,7 +20,7 @@ BEGIN
 select * from FeesReport;
 select * from Student;
 
-update Student set studentFeesStatus='submitted' where studentId=4;
+update Student set studentFeesStatus='submitted' where studentId=5;
 
 
 

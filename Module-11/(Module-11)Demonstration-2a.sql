@@ -25,19 +25,12 @@ BEGIN
 	
 	select @id = studentId from inserted
 	select @Fees = studentFeesStatus from inserted
-    IF(@Fees = 'Submitted' )
-	Begin
-        INSERT INTO FeesReport(studentId, studentFeesStatus)
-        VALUES(@id,'submitted');
-    END
-	 IF(@Fees = 'pending' )
-	Begin
-        INSERT INTO FeesReport(studentId, studentFeesStatus)
-        VALUES(@id,'pending');
-    END
+	INSERT INTO FeesReport(studentId, studentFeesStatus)
+        VALUES(@id,@Fees);
+    
 END
 
-INSERT INTO DBO.Student(studentName,email,studentFeesStatus) VALUES('rahul','rahul@gmail.com','pending');
+INSERT INTO DBO.Student(studentName,email,studentFeesStatus) VALUES('shubham','mukhiya@gmail.com','pending');
 
 select * from FeesReport;
 select * from Student;
