@@ -44,8 +44,3 @@ DELETE FROM DiskTable;
 
 DELETE FROM MemoryTable;
 
-SELECT o.Name, m.*
-FROM
-sys.dm_db_xtp_table_memory_stats m
-JOIN sys.sysobjects o
-ON m.object_id = o.id
