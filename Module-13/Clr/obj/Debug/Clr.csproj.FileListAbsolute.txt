@@ -1,0 +1,5 @@
+C:\Users\Gagan\source\repos\Clr\bin\Debug\Clr.dll
+C:\Users\Gagan\source\repos\Clr\bin\Debug\Clr.pdb
+C:\Users\Gagan\source\repos\Clr\obj\Debug\Clr.csprojAssemblyReference.cache
+C:\Users\Gagan\source\repos\Clr\obj\Debug\Clr.dll
+C:\Users\Gagan\source\repos\Clr\obj\Debug\Clr.pdb
