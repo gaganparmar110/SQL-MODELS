@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -22,6 +24,28 @@ namespace Clr
             }
 
             return retval;
+        }
+
+
+
+        [SqlFunction(FillRowMethodName = "FillRow", TableDefinition = "compare nvarchar(500)")]
+        public static IEnumerable InitMethod(string text, string pattern)
+        {
+            List<string> list = new List<string>();
+
+            if (!string.IsNullOrEmpty(text) && !string.IsNullOrEmpty(pattern))
+            {
+                foreach (Match compare in Regex.Matches(text, pattern))
+                {
+                    list.Add(compare.Value);
+                }
+            }
+
+            return list;
+        }
+        public static void FillRow(object obj, out SqlString compare)
+        {
+            compare = (SqlString)obj;
         }
     }
 }
